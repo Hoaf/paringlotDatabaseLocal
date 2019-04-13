@@ -1,0 +1,455 @@
+﻿@{
+    Layout = null;
+}
+@using PagedList.Mvc
+@model ParkinglotOnline.Models.HomeModel
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--=== Favicon ===-->
+    <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+
+    <title>Parking lot online</title>
+
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <!--=== Slicknav CSS ===-->
+    <link href="/assets/css/plugins/slicknav.min.css" rel="stylesheet">
+    <!--=== Magnific Popup CSS ===-->
+    <link href="/assets/css/plugins/magnific-popup.css" rel="stylesheet">
+    <!--=== Owl Carousel CSS ===-->
+    <link href="/assets/css/plugins/owl.carousel.min.css" rel="stylesheet">
+    <!--=== Gijgo CSS ===-->
+    <link href="/assets/css/plugins/gijgo.css" rel="stylesheet">
+    <!--=== FontAwesome CSS ===-->
+    <link href="/assets/css/font-awesome.css" rel="stylesheet">
+    <!--=== Theme Reset CSS ===-->
+    <link href="/assets/css/reset.css" rel="stylesheet">
+    <!--=== Main Style CSS ===-->
+    <link href="~/assets/style.css" rel="stylesheet">
+    <!--=== Responsive CSS ===-->
+    <link href="/assets/css/responsive.css" rel="stylesheet">
+
+
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="loader-active">
+
+    <!--== Preloader Area Start ==-->
+    <div class="preloader">
+        <div class="preloader-spinner">
+            <div class="loader-content">
+                <img src="/assets/img/preloader.gif" alt="JSOFT">
+            </div>
+        </div>
+    </div>
+    <!--== Preloader Area End ==-->
+    <!--== Header Area Start ==-->
+    <header id="header-area" class="fixed-top">
+        <!--== Header Top Start ==-->
+        <div id="header-top" class="d-none d-xl-block">
+            <div class="container">
+                <div class="row">
+                    <!--== Single HeaderTop Start ==-->
+                    <div class="col-lg-3 text-left">
+                        @if (Session["driverName"] != null)
+                        {
+                            <i class="fa fa-map-marker"> Welcome</i> @Html.DisplayFor(name => Session["driverName"])
+                        }
+                    </div>
+
+                    <!--== Single HeaderTop Start ==-->
+                    <div class="col-lg-3 text-center">
+                        <i class="fa fa-clock-o"></i> @DateTime.Now
+                    </div>
+                    <!--== Single HeaderTop End ==-->
+                    <!--== Social Icons Start ==-->
+                    <div class="col-lg-3 text-right">
+                        <div class="header-social-icons">
+                            <a href="#"><i class="fa fa-behance"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <!--== Social Icons End ==-->
+                </div>
+            </div>
+        </div>
+        <!--== Header Top End ==-->
+        <!--== Header Bottom Start ==-->
+        <div id="header-bottom">
+            <div class="container">
+                <div class="row">
+                    <!--== Logo Start ==-->
+                    <div class="col-lg-4">
+                        <a href="index.html" class="logo">
+                            <img src="/assets/img/logo.png" alt="JSOFT">
+                        </a>
+                    </div>
+                    <!--== Logo End ==-->
+                    <!--== Main Menu Start ==-->
+                    <div class="col-lg-8 d-none d-xl-block">
+                        <nav class="mainmenu alignright">
+                            <ul>
+                                <li class="active">
+                                    <a href="#">Home</a>
+                                </li>
+                                @if (Session["driverName"] == null)
+                                {
+                                    <li><a href="@Url.Action("Index","Login")">Login</a></li>
+                                    <li><a href="@Url.Action("Index","Register")">Sign Up</a></li>
+                                }
+                                @if (Session["driverName"] != null)
+                                {
+                                    <li><a href="@Url.Action("Index","Booking")">Booking</a></li>
+                                    <li><a href="@Url.Action("LogOut","Login")">Log out</a></li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                    <!--== Main Menu End ==-->
+                </div>
+            </div>
+        </div>
+        <!--== Header Bottom End ==-->
+    </header>
+    <!--== Header Area End ==-->
+    <!--== Slider Area Start ==-->
+
+    <section id="slider-area">
+        <!--== slide Item One ==-->
+        <div class="single-slide-item overlay">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-5">
+                        @using (Html.BeginForm("ViewHost", "Home"))
+                        {
+                            <div class="book-a-car">
+
+                                <!--== Pick Up Location ==-->
+                                <div class="pickup-location book-item">
+                                    <h4>PICK-UP CITY:</h4>
+                                    @Html.DropDownListFor(m => m.cityId, Model.SelectCity, new { @class = "custom-select", @onchange = "getCounties()", @id = "citySelect" })
+                                </div>
+                                <!--== Pick Up Location ==-->
+                                <div class="pickup-location book-item">
+                                    <h4>PICK-UP COUNTY:</h4>
+                                    @Html.DropDownListFor(m => m.countyId, Model.SelectCountyByCityId, new { @class = "custom-select", @id = "countySelect" })
+                                </div>
+                                <!--== CarType Choose ==-->
+                                <div class="book-button text-center">
+                                    <button type="button" class="book-now-btn" id="SearchNow">Search Now</button>
+                                </div>
+                            </div>
+                            <div class="book-a-car">
+
+                                <div class="pickup-location book-item">
+
+                                    <h4>List of host:</h4>
+                                    Host's viewing : @ViewBag.Address
+                                    @Html.DropDownListFor(m => m.hostId, Model.searchHostResult, new { @class = "custom-select", @id = "hostSelect", @onchange = "ChangeLotHost()" })
+                                </div>
+                                <div class="pickup-location book-item">
+                                    <h4>CHOOSE CAR TYPE:</h4>
+                                    Lot's viewing : @ViewBag.LotName
+                                    @Html.DropDownListFor(m => m.lotId, Model.SelectLot, new { @class = "custom-select", @id = "lotSelect", @onchange = "ChangeLotHost()" })
+                                </div>
+                                <div class="book-button text-center">
+                                    <button type="submit" class="book-now-btn">View Host</button>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-lg-7 text-right">
+                        <div class="display-table">
+                            <div class="display-table-cell">
+                                <div class="slider-right-text">
+                                    <h1>SEARCH A LOT NOW!</h1>
+                                    <p>FOR AS LOW AS $10 A DAY PLUS 15% DISCOUNT <br> FOR OUR RETURNING CUSTOMERS</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--== slide Item One ==-->
+    </section>
+    <!--== Slider Area End ==-->
+    <!--== About Us Area Start ==-->
+    @if (Session["HostId"] != null && Model.listLot != null)
+    {
+        <section id="car-list-area" class="section-padding">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        @if (Model.listLot.Count() == 0)
+                        {
+                            <div class="section-title  text-center">
+                                <h2>There are no available lot OR lot doesn't existed </h2>
+                                <span class="title-line"><i class="fa fa-car"></i></span>
+                            </div>
+                        }
+                        @if (Model.listLot.Count() > 0)
+                        {
+                            <div class="section-title  text-center">
+                                <h2>Address : @ViewBag.Address </h2>
+                                <h2>Host's name : @ViewBag.FullName </h2>
+                                <span class="title-line"><i class="fa fa-car"></i></span>
+                            </div>
+                        }
+                        <div class="car-list-content">
+                            <div class="row">
+                                <!-- Single Car Start -->
+                                @foreach (var item in Model.listLot)
+                                {
+                                    <div class="col-lg-6 col-md-6">
+                                        <div class="single-car-wrap">
+                                            @using (Html.BeginForm("Booked", "Booking"))
+                                            {
+                                                <img src="@item.Image" style="height: 200px" class="lazy" />
+                                                <div class="car-list-info without-bar">
+                                                    <h2>Parking code: @item.LoHID</h2>
+                                                    <h2><a href="#">Range: @item.Name</a></h2>
+                                                    <h5>@item.UnitPrice Dong Rent /per a hour</h5>
+                                                    <p></p>
+                                                    <ul class="car-info-list">
+                                                        @if (@item.Available == false)
+                                                        {
+                                                            <li style="background-color:crimson; color:white">
+                                                                Is Booking
+                                                            </li>
+                                                        }
+                                                        @if (@item.Available == true)
+                                                        {
+                                                            <li>
+                                                                Is Not Booking
+                                                            </li>
+                                                        }
+
+                                                    </ul>
+                                                    @if (Session["driverID"] != null)
+                                                    {
+                                                        @Html.Hidden("LOHID", item.LoHID)
+                                                        @Html.Hidden("PRICE", item.UnitPrice)
+                                                        <button type="submit" class="rent-btn">Book Now</button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="rent-btn"><a href="@Url.Action("Index","Login")">Login to Book</a></div>
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+
+                                    </div>
+
+                                }
+                                <!-- Single Car End -->
+                            </div>
+                        </div>
+
+                        <!-- Page Pagination Start -->
+                        <div class="page-pagi">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item ">
+                                        @Html.PagedListPager(Model.listLot, page => Url.Action("ViewHost", "Home", new { page }))
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+
+                        <!-- Page Pagination End -->
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    }
+    <br />
+    @if (Session["HostId"] == null)
+    {
+        <div class="section-title  text-center">
+            <h2>You haven't choose a host </h2>
+            <span class="title-line"><i class="fa fa-car"></i></span>
+        </div>
+    }
+
+    <!--== Footer Area Start ==-->
+    <section id="footer-area">
+        <!-- Footer Widget Start -->
+        <div class="footer-widget-area">
+            <div class="container">
+                <div class="row">
+                    <!-- Single Footer Widget Start -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-footer-widget">
+                            <h2>About Us</h2>
+                            <div class="widget-body">
+                                <img src="/assets/img/logo.png" alt="JSOFT">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Footer Widget End -->
+                    <!-- Single Footer Widget Start -->
+                    <div class="col-lg-8 col-md-12">
+                        <div class="single-footer-widget">
+                            <p style="font-size:15px">
+                                Company 1: 309 Le Van Khuong, Hiep Thanh ward, District 12. Ho Chi Minh City.
+                            </p>
+                            <p style="font-size:15px">
+                                Company 2: 169 Hoa Binh, 12 ward, District Tan Phu. Ho Chi Minh City.
+                            </p>
+                            <b>
+                                <p style="font-size:15px">
+                                    ® Our target are help people can have convenient, quality, safe and reliable parking. Help for stable traffic during peak hours.
+                                </p>
+                            </b>
+                        </div>
+                    </div>
+                    <!-- Single Footer Widget End -->
+                </div>
+            </div>
+        </div>
+        <!-- Footer Widget End -->
+        <!-- Footer Bottom Start -->
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Parking Lot Online Company &copy; Since 2019
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Bottom End -->
+    </section>
+    <!--== Footer Area End ==-->
+    <!--== Scroll Top Area Start ==-->
+    <div class="scroll-top">
+        <img src="/assets/img/scroll-top.png" alt="JSOFT">
+    </div>
+    <!--== Scroll Top Area End ==-->
+    <!--=======================Javascript============================-->
+    <!--=== Jquery Min Js ===-->
+    <script src="/assets/js/jquery-3.2.1.min.js"></script>
+    <!--=== Jquery Migrate Min Js ===-->
+    <script src="/assets/js/jquery-migrate.min.js"></script>
+    <!--=== Popper Min Js ===-->
+    <script src="/assets/js/popper.min.js"></script>
+    <!--=== Bootstrap Min Js ===-->
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <!--=== Gijgo Min Js ===-->
+    <script src="/assets/js/plugins/gijgo.js"></script>
+    <!--=== Vegas Min Js ===-->
+    <script src="/assets/js/plugins/vegas.min.js"></script>
+    <!--=== Isotope Min Js ===-->
+    <script src="/assets/js/plugins/isotope.min.js"></script>
+    <!--=== Owl Caousel Min Js ===-->
+    <script src="/assets/js/plugins/owl.carousel.min.js"></script>
+    <!--=== Waypoint Min Js ===-->
+    <script src="/assets/js/plugins/waypoints.min.js"></script>
+    <!--=== CounTotop Min Js ===-->
+    <script src="/assets/js/plugins/counterup.min.js"></script>
+    <!--=== YtPlayer Min Js ===-->
+    <script src="/assets/js/plugins/mb.YTPlayer.js"></script>
+    <!--=== Magnific Popup Min Js ===-->
+    <script src="/assets/js/plugins/magnific-popup.min.js"></script>
+    <!--=== Slicknav Min Js ===-->
+    <script src="/assets/js/plugins/slicknav.min.js"></script>
+    <!--=== Session updater===-->
+    <script src="~/assets/js/SessionUpdater.js"></script>
+    <!--=== Mian Js ===-->
+    <script src="/assets/js/main.js"></script>
+
+    <script type="text/javascript">
+                    @*SessionUpdater.Setup('@Url.Action("KeepSessionAlive","Home")');*@
+                    function ChangeLotHost() {
+                            $.ajax({
+                                    url: '@Url.Action("ChangeLotHost", "Home")',
+                                    contentType: "application/json;charset-utf-8",
+                                    dataType: "Json",
+                                    type: 'POST',
+                                    data: "{'lotHostId':'" + $("#lotSelect").val() + ":" + $("#hostSelect").val()+ "'}",
+                                    });
+                    }
+
+                    function getCounties() {
+                            $.ajax({
+                                url: '@Url.Action("ChooseCity", "Home")',
+                                contentType: "application/json;charset-utf-8",
+                                type: 'POST',
+                                dataType: "Json",
+                                data: "{'cityId':'" + $("#citySelect").val() + "'}",
+                                success: function (data) {
+                                    $('#countySelect').empty();
+                                    if (data.length == 0) {
+                                        $('#countySelect').append('<option>No county in this city</option>');
+                                    }
+                                    $.each(data, function (value, index) {
+                                        var obj = JSON.stringify(index).split(",");
+                                        var text = obj[3].substring(8, obj[3].length - 1);
+                                        var value = obj[4].substring(9, obj[4].length - 2);
+                                        $('#countySelect').append('<option value="' + value + '">' + text + '</option>');
+                                    });
+
+                                },
+                                error: function (response) {
+                                    alert("error : " + response.responseText);
+                                }
+                            });
+                    }
+
+                    $(document).ready(function () {
+                        $('#SearchNow').click(function () {
+                            $.ajax({
+                                    url: '@Url.Action("getHost", "Home")',
+                                    contentType: "application/json;charset-utf-8",
+                                    type: 'POST',
+                                    dataType: "Json",
+                                    data: "{'countyLotId':'" + $("#countySelect").val() + ":" + $("#lotSelect").val()+ "'}",
+                                    success: function (data) {
+                                        $('#hostSelect').empty();
+                                        if (data.length == 0) {
+                                            $('#hostSelect').append('<option>No host in this county</option>');
+                                        }
+                                        var text;
+                                        var value;
+                                        $.each(data, function (value, index) {
+                                            var obj = JSON.stringify(index).split(",");
+                                            text = obj[3].substring(8, obj[3].length - 1);
+                                            value = obj[4].substring(9, obj[4].length - 2);
+                                            $('#hostSelect').append('<option value="' + value + '">' + text + '</option>');
+                                        });
+                                        if (text == 'No host in this county') {
+                                            alert(0 + " host(s) were found");
+                                        } else {
+                                            alert(data.length + " host(s) were found");
+                                        }
+                                    },
+                                    error: function (response) {
+                                        alert("error : " + response.responseText);
+                                    }
+                                });
+                        });
+                    });
+    </script>
+</body>
+
+</html>

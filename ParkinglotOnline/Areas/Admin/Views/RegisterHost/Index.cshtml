@@ -1,0 +1,131 @@
+﻿@model ParkinglotOnline.Areas.Admin.Models.MultipleModel.MultipleAdmin
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>PLO -Register Host</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="~/Areas/Admin/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="~/Areas/Admin/assets/css/sb-admin.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-dark">
+
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">
+                Register an Account  <a style="margin-left:55%" class="btn btn-primary" href="@Url.Action("Index","Admin",new { area = "Admin" })">Return Home</a><br/>
+                <span style="color:red">@Model.ErrorAcceptMessage</span>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("Register", "RegisterHost", new { area = "Admin" }))
+                {
+                    <form>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Host ID</span>
+                                <span style="color:crimson">@Html.ValidationMessageFor(model => model.host.ID)</span>
+                                @Html.TextBoxFor(model => model.host.ID, new { @class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Full Name</span>
+                                <span style="color:crimson">@Html.ValidationMessageFor(model => model.host.Fullname)</span>
+                                @Html.TextBoxFor(model => model.host.Fullname, new { @class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group">
+                                <span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Address</span>
+                                <span style="color:crimson">@Html.ValidationMessageFor(model => model.host.Address)</span>
+                                @Html.TextBoxFor(model => model.host.Address, new { @class = "form-control", @required = "required" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Password</span>
+                                        <span style="color:crimson">@Html.ValidationMessageFor(model => model.host.Password)</span>
+                                        @Html.TextBoxFor(model => model.host.Password, new { @class = "form-control", @required = "required", @type = "password" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Confirm</span>
+                                        <input type="password" value="" name="txtConfirm" class="form-control" required="required" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        @Html.DropDownListFor(m => m.cityId, Model.SelectCity, new { @class = "custom-select", @onchange = "getCounties()", @id = "citySelect" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        @Html.DropDownListFor(m => m.countyId, Model.SelectCountyByCityId, new { @class = "custom-select", @id = "countySelect" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input class="btn btn-primary btn-block" value="Register" type="submit" />
+                    </form>
+                }
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Areas/Admin/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Areas/Admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Areas/Admin/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script type="text/javascript">
+        function getCounties() {
+                            $.ajax({
+                                url: '@Url.Action("ChooseCity", "RegisterHost",new { area ="Admin" })',
+                                contentType: "application/json;charset-utf-8",
+                                type: 'POST',
+                                dataType: "Json",
+                                data: "{'cityId':'" + $("#citySelect").val() + "'}",
+                                success: function (data) {
+                                    $('#countySelect').empty();
+                                    if (data.length == 0) {
+                                        $('#countySelect').append('<option>No county in this city</option>');
+                                    }
+                                    $.each(data, function (value, index) {
+                                        var obj = JSON.stringify(index).split(",");
+                                        var text = obj[3].substring(8, obj[3].length - 1);
+                                        var value = obj[4].substring(9, obj[4].length - 2);
+                                        $('#countySelect').append('<option value="' + value + '">' + text + '</option>');
+                                    });
+
+                                },
+                                error: function (response) {
+                                    alert("error : " + response.responseText);
+                                }
+                            });
+                    }
+    </script>
+
+</body>
+
+</html>

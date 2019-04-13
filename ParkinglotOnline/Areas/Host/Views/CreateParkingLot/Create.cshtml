@@ -1,0 +1,294 @@
+﻿@model ParkinglotOnline.Areas.Host.MultipleModel.MultipleCreatePage
+@{
+    Layout = null;
+    if (Session["hostID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<!DOCTYPE html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--=== Favicon ===-->
+    <link rel="shortcut icon" href="~/assets/img/favicon.ico" type="image/x-icon" />
+
+    <title>PLO-Create New Parking Lot</title>
+
+    <!--=== Bootstrap CSS ===-->
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <!--=== Slicknav CSS ===-->
+    <link href="/assets/css/plugins/slicknav.min.css" rel="stylesheet">
+    <!--=== Magnific Popup CSS ===-->
+    <link href="/assets/css/plugins/magnific-popup.css" rel="stylesheet">
+    <!--=== Owl Carousel CSS ===-->
+    <link href="/assets/css/plugins/owl.carousel.min.css" rel="stylesheet">
+    <!--=== Gijgo CSS ===-->
+    <link href="/assets/css/plugins/gijgo.css" rel="stylesheet">
+    <!--=== FontAwesome CSS ===-->
+    <link href="/assets/css/font-awesome.css" rel="stylesheet">
+    <!--=== Theme Reset CSS ===-->
+    <link href="/assets/css/reset.css" rel="stylesheet">
+    <!--=== Main Style CSS ===-->
+    <link href="~/assets/style.css" rel="stylesheet">
+    <!--=== Responsive CSS ===-->
+    <link href="/assets/css/responsive.css" rel="stylesheet">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <!--[if lt IE 9]>
+        <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        function () {
+
+        }
+    </script>
+</head>
+
+<body class="loader-active">
+    @if (Session["SUCCESS"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                /**/
+                alert("-Create Parking Lot Success!\n-Waiting For Administration Accept!");
+                /**/
+            };
+        </script>
+    }
+    @if (Session["SUCCESS"] == null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                /**/
+                alert("-Fail to Parking Lot!");
+                /**/
+            };
+        </script>
+    }
+    <!--== Preloader Area Start ==-->
+    <div class="preloader">
+        <div class="preloader-spinner">
+            <div class="loader-content">
+                <img src="/assets/img/preloader.gif" alt="JSOFT">
+            </div>
+        </div>
+    </div>
+    <!--== Preloader Area End ==-->
+    <!--== Header Area Start ==-->
+    <header id="header-area" class="fixed-top">
+        <!--== Header Top Start ==-->
+        <div id="header-top" class="d-none d-xl-block">
+            <div class="container">
+                <div class="row">
+                    <!--== Single HeaderTop Start ==-->
+                    <div class="col-lg-3 text-left">
+                        <marquee width="100%" behavior="alternate">
+                            Hello @Session["hostName"].ToString()
+                        </marquee>
+
+                    </div>
+                    <!--== Single HeaderTop End ==-->
+
+                </div>
+            </div>
+        </div>
+        <!--== Header Top End ==-->
+        <!--== Header Bottom Start ==-->
+        <div id="header-bottom">
+            <div class="container">
+                <div class="row">
+                    <!--== Logo Start ==-->
+                    <div class="col-lg-4">
+                        <a href="@Url.Action("List","Host", new {area="Host" })" class="logo">
+                            <img src="/assets/img/logo.png" alt="JSOFT">
+                        </a>
+                    </div>
+                    <!--== Logo End ==-->
+                    <!--== Main Menu Start ==-->
+                    <div class="col-lg-8 d-none d-xl-block">
+                        <nav class="mainmenu alignright">
+                            <ul>
+                                <li>
+                                    <a href="@Url.Action("List","Host", new {area="Host" })">Home</a>
+                                </li>
+                                <li>
+                                    <a href="#">SERVICES</a>
+                                    <ul>
+                                        <li><a href="@Url.Action("List","Host", new {area="Host" })">Create New Parking Lot</a></li>
+                                        <li><a href="@Url.Action("Index","Finance", new {area="Host" })">Financial</a></li>
+                                        <li><a href="@Url.Action("LogOut","Login",new {area="" })">Log Out</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <!--== Main Menu End ==-->
+                </div>
+            </div>
+        </div>
+        <!--== Header Bottom End ==-->
+    </header>
+    <!--== Header Area End ==-->
+    <!--== Page Title Area Start ==-->
+    <section id="page-title-area" class="section-padding overlay">
+        <div class="container">
+            <div class="row">
+                <!-- Page Title Start -->
+                <div class="col-lg-12">
+                    <div class="section-title  text-center">
+                        <h2>Create New Parking Lot</h2>
+                        <span class="title-line"><i class="fa fa-car"></i></span>
+
+                    </div>
+                </div>
+                <!-- Page Title End -->
+            </div>
+        </div>
+    </section>
+    <!--== Page Title Area End ==-->
+    <!--== Gallery Page Content Start ==-->
+    <section id="gallery-page-content" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="popular-cars-wrap">
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true)
+                            <div class="row popular-car-gird">
+                                <!-- Single Popular Car Start -->
+                                @foreach (var item in Model.ListLot)
+                                {
+                                    <div class="col-lg-4 col-md-6 con suv mpv">
+                                        <div class="single-popular-car">
+                                            <div class="p-car-thumbnails">
+                                                <img src="@item.Image" style="width:280px;height:120px" alt="JSOFT">
+                                                <label class="containerRa">
+                                                    @Html.RadioButtonFor(model => model.LotHostInsert.LotID, item.ID)
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+
+                                            <div class="p-car-content">
+                                                <h3>
+                                                    <a href="#">@item.Name</a>
+                                                    <span class="price"><i class="fa fa-tag"></i> @item.UnitPrice Đ/Per hour</span>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                                <!-- Single Popular Car End -->
+                            </div>
+                            <label style="color:crimson">@Html.DisplayFor(model => model.CreateErrorMessage)</label>
+                            <div class="log-btn" style="margin-top:1%">
+                                <button type="submit" style="background-color:orange; width: 200px"> Create New Parking Lot</button>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--== Gallery Page Content End ==-->
+    <!--== Footer Area Start ==-->
+    <section id="footer-area">
+        <!-- Footer Widget Start -->
+        <div class="footer-widget-area">
+            <div class="container">
+                <div class="row">
+                    <!-- Single Footer Widget Start -->
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-footer-widget">
+                            <h2>About Us</h2>
+                            <div class="widget-body">
+                                <img src="/assets/img/logo.png" alt="JSOFT">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Single Footer Widget End -->
+                    <!-- Single Footer Widget Start -->
+                    <div class="col-lg-8 col-md-12">
+                        <div class="single-footer-widget">
+                            <p style="font-size:15px">
+                                Company 1: 309 Le Van Khuong, Hiep Thanh ward, District 12. Ho Chi Minh City.
+                            </p>
+                            <p style="font-size:15px">
+                                Company 2: 169 Hoa Binh, 12 ward, District Tan Phu. Ho Chi Minh City.
+                            </p>
+                            <b>
+                                <p style="font-size:15px">
+                                    ® Our target are help people can have convenient, quality, safe and reliable parking. Help for stable traffic during peak hours.
+                                </p>
+                            </b>
+                        </div>
+                    </div>
+                    <!-- Single Footer Widget End -->
+                </div>
+            </div>
+        </div>
+        <!-- Footer Widget End -->
+        <!-- Footer Bottom Start -->
+        <div class="footer-bottom-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Parking Lot Online Company &copy; Since 2019
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Bottom End -->
+    </section>
+    <!--== Footer Area End ==-->
+    <!--== Scroll Top Area Start ==-->
+    <div class="scroll-top">
+        <img src="/assets/img/scroll-top.png" alt="JSOFT">
+    </div>
+    <!--== Scroll Top Area End ==-->
+    <!--=======================Javascript============================-->
+    <!--=== Jquery Min Js ===-->
+    <script src="/assets/js/jquery-3.2.1.min.js"></script>
+    <!--=== Jquery Migrate Min Js ===-->
+    <script src="/assets/js/jquery-migrate.min.js"></script>
+    <!--=== Popper Min Js ===-->
+    <script src="/assets/js/popper.min.js"></script>
+    <!--=== Bootstrap Min Js ===-->
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <!--=== Gijgo Min Js ===-->
+    <script src="/assets/js/plugins/gijgo.js"></script>
+    <!--=== Vegas Min Js ===-->
+    <script src="/assets/js/plugins/vegas.min.js"></script>
+    <!--=== Isotope Min Js ===-->
+    <script src="/assets/js/plugins/isotope.min.js"></script>
+    <!--=== Owl Caousel Min Js ===-->
+    <script src="/assets/js/plugins/owl.carousel.min.js"></script>
+    <!--=== Waypoint Min Js ===-->
+    <script src="/assets/js/plugins/waypoints.min.js"></script>
+    <!--=== CounTotop Min Js ===-->
+    <script src="/assets/js/plugins/counterup.min.js"></script>
+    <!--=== YtPlayer Min Js ===-->
+    <script src="/assets/js/plugins/mb.YTPlayer.js"></script>
+    <!--=== Magnific Popup Min Js ===-->
+    <script src="/assets/js/plugins/magnific-popup.min.js"></script>
+    <!--=== Slicknav Min Js ===-->
+    <script src="/assets/js/plugins/slicknav.min.js"></script>
+
+    <!--=== Mian Js ===-->
+    <script src="/assets/js/main.js"></script>
+
+</body>
+
+</html>

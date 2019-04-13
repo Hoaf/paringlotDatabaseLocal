@@ -1,0 +1,503 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ParkingLotOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhoneNumber" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isEnable" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BookingLot">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DriverID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EntryDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExitDateTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Driver" Relationship="Self.FK_BookingLot_Driver" FromRole="BookingLot" ToRole="Driver" />
+    <NavigationProperty Name="BookingLotDetails" Relationship="Self.FK_BookingLotDetail_BookingLot" FromRole="BookingLot" ToRole="BookingLotDetail" />
+  </EntityType>
+  <EntityType Name="BookingLotDetail">
+    <Key>
+      <PropertyRef Name="BLDId" />
+    </Key>
+    <Property Name="BLDId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HostID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LotID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BookingLotID" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Double" />
+    <Property Name="status" Type="Int32" />
+    <NavigationProperty Name="BookingLot" Relationship="Self.FK_BookingLotDetail_BookingLot" FromRole="BookingLotDetail" ToRole="BookingLot" />
+    <NavigationProperty Name="Host" Relationship="Self.FK_BookingLotDetail_Host" FromRole="BookingLotDetail" ToRole="Host" />
+    <NavigationProperty Name="LotHost" Relationship="Self.FK_BookingLotDetail_LotHost" FromRole="BookingLotDetail" ToRole="LotHost" />
+  </EntityType>
+  <EntityType Name="BookingStatu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Counties" Relationship="Self.FK_County_City" FromRole="City" ToRole="County" />
+  </EntityType>
+  <EntityType Name="County">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CityID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK_County_City" FromRole="County" ToRole="City" />
+    <NavigationProperty Name="Hosts" Relationship="Self.FK_Host_County" FromRole="County" ToRole="Host" />
+  </EntityType>
+  <EntityType Name="Driver">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhoneNumber" Type="Int32" Nullable="false" />
+    <Property Name="isEnable" Type="Boolean" />
+    <NavigationProperty Name="BookingLots" Relationship="Self.FK_BookingLot_Driver" FromRole="Driver" ToRole="BookingLot" />
+  </EntityType>
+  <EntityType Name="Finance">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Income" Type="Double" Nullable="false" />
+    <Property Name="HostID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Host" Relationship="Self.FK_Finance_Host" FromRole="Finance" ToRole="Host" />
+  </EntityType>
+  <EntityType Name="Host">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CountyID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="isEnable" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="BookingLotDetails" Relationship="Self.FK_BookingLotDetail_Host" FromRole="Host" ToRole="BookingLotDetail" />
+    <NavigationProperty Name="County" Relationship="Self.FK_Host_County" FromRole="Host" ToRole="County" />
+    <NavigationProperty Name="Finances" Relationship="Self.FK_Finance_Host" FromRole="Host" ToRole="Finance" />
+    <NavigationProperty Name="LotHosts" Relationship="Self.FK_LotHost_Host1" FromRole="Host" ToRole="LotHost" />
+  </EntityType>
+  <EntityType Name="Lot">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UnitPrice" Type="Double" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LotHosts" Relationship="Self.FK_LotHost_Lot" FromRole="Lot" ToRole="LotHost" />
+  </EntityType>
+  <EntityType Name="LotHost">
+    <Key>
+      <PropertyRef Name="LoHID" />
+    </Key>
+    <Property Name="LoHID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HostID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LotID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Available" Type="Boolean" Nullable="false" />
+    <Property Name="isEnable" Type="Boolean" />
+    <NavigationProperty Name="BookingLotDetails" Relationship="Self.FK_BookingLotDetail_LotHost" FromRole="LotHost" ToRole="BookingLotDetail" />
+    <NavigationProperty Name="Host" Relationship="Self.FK_LotHost_Host1" FromRole="LotHost" ToRole="Host" />
+    <NavigationProperty Name="Lot" Relationship="Self.FK_LotHost_Lot" FromRole="LotHost" ToRole="Lot" />
+  </EntityType>
+  <EntityType Name="database_firewall_rules">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="start_ip_address" />
+      <PropertyRef Name="end_ip_address" />
+      <PropertyRef Name="create_date" />
+      <PropertyRef Name="modify_date" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
+  </EntityType>
+  <Association Name="FK_BookingLot_Driver">
+    <End Role="Driver" Type="Self.Driver" Multiplicity="1" />
+    <End Role="BookingLot" Type="Self.BookingLot" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Driver">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="BookingLot">
+        <PropertyRef Name="DriverID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingLotDetail_BookingLot">
+    <End Role="BookingLot" Type="Self.BookingLot" Multiplicity="1" />
+    <End Role="BookingLotDetail" Type="Self.BookingLotDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookingLot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BookingLotDetail">
+        <PropertyRef Name="BookingLotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingLotDetail_Host">
+    <End Role="Host" Type="Self.Host" Multiplicity="1" />
+    <End Role="BookingLotDetail" Type="Self.BookingLotDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BookingLotDetail">
+        <PropertyRef Name="HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingLotDetail_LotHost">
+    <End Role="LotHost" Type="Self.LotHost" Multiplicity="1" />
+    <End Role="BookingLotDetail" Type="Self.BookingLotDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LotHost">
+        <PropertyRef Name="LoHID" />
+      </Principal>
+      <Dependent Role="BookingLotDetail">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_County_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="County" Type="Self.County" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="County">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Host_County">
+    <End Role="County" Type="Self.County" Multiplicity="1" />
+    <End Role="Host" Type="Self.Host" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Host">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Finance_Host">
+    <End Role="Host" Type="Self.Host" Multiplicity="1" />
+    <End Role="Finance" Type="Self.Finance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Finance">
+        <PropertyRef Name="HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotHost_Host1">
+    <End Role="Host" Type="Self.Host" Multiplicity="1" />
+    <End Role="LotHost" Type="Self.LotHost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LotHost">
+        <PropertyRef Name="HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotHost_Lot">
+    <End Role="Lot" Type="Self.Lot" Multiplicity="0..1" />
+    <End Role="LotHost" Type="Self.LotHost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LotHost">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ParkingLotOnlineEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="BookingLots" EntityType="Self.BookingLot" />
+    <EntitySet Name="BookingLotDetails" EntityType="Self.BookingLotDetail" />
+    <EntitySet Name="BookingStatus" EntityType="Self.BookingStatu" />
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Counties" EntityType="Self.County" />
+    <EntitySet Name="Drivers" EntityType="Self.Driver" />
+    <EntitySet Name="Finances" EntityType="Self.Finance" />
+    <EntitySet Name="Hosts" EntityType="Self.Host" />
+    <EntitySet Name="Lots" EntityType="Self.Lot" />
+    <EntitySet Name="LotHosts" EntityType="Self.LotHost" />
+    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
+    <AssociationSet Name="FK_BookingLot_Driver" Association="Self.FK_BookingLot_Driver">
+      <End Role="Driver" EntitySet="Drivers" />
+      <End Role="BookingLot" EntitySet="BookingLots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingLotDetail_BookingLot" Association="Self.FK_BookingLotDetail_BookingLot">
+      <End Role="BookingLot" EntitySet="BookingLots" />
+      <End Role="BookingLotDetail" EntitySet="BookingLotDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingLotDetail_Host" Association="Self.FK_BookingLotDetail_Host">
+      <End Role="Host" EntitySet="Hosts" />
+      <End Role="BookingLotDetail" EntitySet="BookingLotDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingLotDetail_LotHost" Association="Self.FK_BookingLotDetail_LotHost">
+      <End Role="LotHost" EntitySet="LotHosts" />
+      <End Role="BookingLotDetail" EntitySet="BookingLotDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_County_City" Association="Self.FK_County_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="County" EntitySet="Counties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Host_County" Association="Self.FK_Host_County">
+      <End Role="County" EntitySet="Counties" />
+      <End Role="Host" EntitySet="Hosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Finance_Host" Association="Self.FK_Finance_Host">
+      <End Role="Host" EntitySet="Hosts" />
+      <End Role="Finance" EntitySet="Finances" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotHost_Host1" Association="Self.FK_LotHost_Host1">
+      <End Role="Host" EntitySet="Hosts" />
+      <End Role="LotHost" EntitySet="LotHosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotHost_Lot" Association="Self.FK_LotHost_Lot">
+      <End Role="Lot" EntitySet="Lots" />
+      <End Role="LotHost" EntitySet="LotHosts" />
+    </AssociationSet>
+    <FunctionImport Name="Sp_Admin_Host_AcceptRequest">
+      <Parameter Name="LoHID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Admin_Host_CancelRequest">
+      <Parameter Name="LoHID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Admin_Host_CountNotific" ReturnType="Collection(Int32)" />
+    <FunctionImport Name="Sp_Admin_Host_Detail" ReturnType="Collection(ParkingLotOnlineModel.Sp_Admin_Host_Detail_Result)">
+      <Parameter Name="HostID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Admin_Host_Request" ReturnType="Collection(ParkingLotOnlineModel.Sp_Admin_Host_Request_Result)" />
+    <FunctionImport Name="Sp_Admin_ListHost" ReturnType="Collection(ParkingLotOnlineModel.Sp_Admin_ListHost_Result)" />
+    <FunctionImport Name="Sp_Admin_ListLotHot" ReturnType="Collection(ParkingLotOnlineModel.Sp_Admin_ListLotHot_Result)">
+      <Parameter Name="HostID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Admin_Login" ReturnType="Collection(String)">
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Admin_LotHot_UpdateLoHID">
+      <Parameter Name="LotID" Mode="In" Type="String" />
+      <Parameter Name="LoHID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_BookingDetail_Cancel">
+      <Parameter Name="BookingID" Mode="In" Type="Int32" />
+      <Parameter Name="LoHID" Mode="In" Type="String" />
+      <Parameter Name="HostID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_BookingLot_ByYearAndMonth" ReturnType="Collection(ParkingLotOnlineModel.Sp_BookingLot_ByYearAndMonth_Result)">
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="HostID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_BookingLot_Current" ReturnType="Collection(ParkingLotOnlineModel.Sp_BookingLot_Current_Result)">
+      <Parameter Name="HostID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_BookingLot_InfoEachLot" ReturnType="Collection(ParkingLotOnlineModel.Sp_BookingLot_InfoEachLot_Result)">
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="HostID" Mode="In" Type="String" />
+      <Parameter Name="BookingID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_BookingLot_SumPrice" ReturnType="Collection(Double)">
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="HostID" Mode="In" Type="String" />
+      <Parameter Name="BookingID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Count_Parkinglot_unavailable" ReturnType="Collection(Int32)">
+      <Parameter Name="ID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Driver_Login" ReturnType="Collection(String)">
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_DriverBooked_History" ReturnType="Collection(ParkingLotOnlineModel.Sp_DriverBooked_History_Result)">
+      <Parameter Name="driverID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Host_ListLot" ReturnType="Collection(ParkingLotOnlineModel.Sp_Host_ListLot_Result)">
+      <Parameter Name="ID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Host_Login" ReturnType="Collection(String)">
+      <Parameter Name="ID" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Income_ByYearAndMonth" ReturnType="Collection(Double)">
+      <Parameter Name="Month" Mode="In" Type="Int32" />
+      <Parameter Name="Year" Mode="In" Type="Int32" />
+      <Parameter Name="HostID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Infomation_Detail" ReturnType="Collection(ParkingLotOnlineModel.Sp_Infomation_Detail_Result)">
+      <Parameter Name="LoHID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_Lot_All" ReturnType="Collection(ParkingLotOnlineModel.Sp_Lot_All_Result)" />
+    <FunctionImport Name="Sp_Lot_ByLoHID" ReturnType="Collection(ParkingLotOnlineModel.Sp_Lot_ByLoHID_Result)">
+      <Parameter Name="LoHID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_LotHost_Available">
+      <Parameter Name="LoHID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_LotHost_Insert">
+      <Parameter Name="LoHID" Mode="In" Type="String" />
+      <Parameter Name="HostID" Mode="In" Type="String" />
+      <Parameter Name="LotID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_LotHost_Lot" ReturnType="Collection(ParkingLotOnlineModel.Sp_LotHost_Lot_Result)">
+      <Parameter Name="HostID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_LotHost_Lot_Driver" ReturnType="Collection(ParkingLotOnlineModel.Sp_LotHost_Lot_Driver_Result)">
+      <Parameter Name="hostId" Mode="In" Type="String" />
+      <Parameter Name="lotId" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_LotHost_Lot_Driver_All" ReturnType="Collection(ParkingLotOnlineModel.Sp_LotHost_Lot_Driver_All_Result)">
+      <Parameter Name="HostID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Sp_LotHot_Count" ReturnType="Collection(Int32)">
+      <Parameter Name="HostID" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="Sp_Admin_Host_Detail_Result">
+    <Property Type="String" Name="ID" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Password" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Fullname" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Address" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="CountyName" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="CityName" Nullable="false" MaxLength="150" />
+  </ComplexType>
+  <ComplexType Name="Sp_Admin_Host_Request_Result">
+    <Property Type="String" Name="ID" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Fullname" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="LoHID" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Sp_Admin_ListHost_Result">
+    <Property Type="String" Name="ID" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="Fullname" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Address" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="CountyName" Nullable="false" MaxLength="150" />
+    <Property Type="String" Name="CityName" Nullable="false" MaxLength="150" />
+  </ComplexType>
+  <ComplexType Name="Sp_Admin_ListLotHot_Result">
+    <Property Type="String" Name="LoHID" Nullable="false" MaxLength="10" />
+    <Property Type="Boolean" Name="Available" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Sp_BookingLot_ByYearAndMonth_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="DriverID" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="EntryDateTime" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ExitDateTime" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="Sp_BookingLot_Current_Result">
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="DriverID" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="EntryDateTime" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ExitDateTime" Nullable="true" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="Sp_BookingLot_InfoEachLot_Result">
+    <Property Type="String" Name="LotID" Nullable="false" MaxLength="10" />
+    <Property Type="Double" Name="UnitPrice" Nullable="true" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_DriverBooked_History_Result">
+    <Property Type="Int32" Name="BLDId" Nullable="false" />
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="20" />
+    <Property Type="DateTime" Name="EntryDateTime" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="ExitDateTime" Nullable="true" Precision="23" />
+    <Property Type="String" Name="HostID" Nullable="false" MaxLength="20" />
+    <Property Type="String" Name="statusName" Nullable="true" MaxLength="10" />
+    <Property Type="String" Name="LoHID" Nullable="false" MaxLength="10" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+    <Property Type="String" Name="LotImage" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="BLid" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="Sp_Host_ListLot_Result">
+    <Property Type="String" Name="LoHID" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+    <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_Infomation_Detail_Result">
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="20" />
+    <Property Type="Int32" Name="PhoneNumber" Nullable="false" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="DateTime" Name="EntryDateTime" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_Lot_All_Result">
+    <Property Type="String" Name="ID" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+    <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_Lot_ByLoHID_Result">
+    <Property Type="String" Name="ID" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="Description" Nullable="true" MaxLength="500" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+    <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_LotHost_Lot_Result">
+    <Property Type="String" Name="LoHID" Nullable="false" MaxLength="10" />
+    <Property Type="String" Name="ID" Nullable="false" MaxLength="10" />
+    <Property Type="Boolean" Name="Available" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+    <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_LotHost_Lot_Driver_Result">
+    <Property Type="String" Name="LoHID" Nullable="false" MaxLength="10" />
+    <Property Type="Boolean" Name="Available" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+    <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="Sp_LotHost_Lot_Driver_All_Result">
+    <Property Type="String" Name="LoHID" Nullable="false" MaxLength="10" />
+    <Property Type="Boolean" Name="Available" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+    <Property Type="Double" Name="UnitPrice" Nullable="false" />
+    <Property Type="String" Name="Image" Nullable="true" MaxLength="50" />
+  </ComplexType>
+</Schema>

@@ -1,0 +1,253 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ParkingLotOnlineModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhoneNumber" Type="Decimal" Precision="18" Scale="0" />
+    <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="isEnable" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BookingLot">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DriverID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="EntryDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ExitDateTime" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Driver" Relationship="Self.FK_BookingLot_Driver" FromRole="BookingLot" ToRole="Driver" />
+    <NavigationProperty Name="BookingLotDetails" Relationship="Self.FK_BookingLotDetail_BookingLot" FromRole="BookingLot" ToRole="BookingLotDetail" />
+  </EntityType>
+  <EntityType Name="BookingLotDetail">
+    <Key>
+      <PropertyRef Name="BLDId" />
+    </Key>
+    <Property Name="BLDId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="HostID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LotID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="BookingLotID" Type="Int32" Nullable="false" />
+    <Property Name="UnitPrice" Type="Double" />
+    <Property Name="status" Type="Int32" />
+    <NavigationProperty Name="BookingLot" Relationship="Self.FK_BookingLotDetail_BookingLot" FromRole="BookingLotDetail" ToRole="BookingLot" />
+    <NavigationProperty Name="Host" Relationship="Self.FK_BookingLotDetail_Host" FromRole="BookingLotDetail" ToRole="Host" />
+    <NavigationProperty Name="LotHost" Relationship="Self.FK_BookingLotDetail_LotHost" FromRole="BookingLotDetail" ToRole="LotHost" />
+  </EntityType>
+  <EntityType Name="BookingStatu">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Counties" Relationship="Self.FK_County_City" FromRole="City" ToRole="County" />
+  </EntityType>
+  <EntityType Name="County">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CityID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK_County_City" FromRole="County" ToRole="City" />
+    <NavigationProperty Name="Hosts" Relationship="Self.FK_Host_County" FromRole="County" ToRole="Host" />
+  </EntityType>
+  <EntityType Name="Driver">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="PhoneNumber" Type="Int32" Nullable="false" />
+    <Property Name="isEnable" Type="Boolean" />
+    <NavigationProperty Name="BookingLots" Relationship="Self.FK_BookingLot_Driver" FromRole="Driver" ToRole="BookingLot" />
+  </EntityType>
+  <EntityType Name="Host">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fullname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CountyID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="isEnable" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="BookingLotDetails" Relationship="Self.FK_BookingLotDetail_Host" FromRole="Host" ToRole="BookingLotDetail" />
+    <NavigationProperty Name="County" Relationship="Self.FK_Host_County" FromRole="Host" ToRole="County" />
+    <NavigationProperty Name="LotHosts" Relationship="Self.FK_LotHost_Host1" FromRole="Host" ToRole="LotHost" />
+  </EntityType>
+  <EntityType Name="Lot">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="UnitPrice" Type="Double" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="LotHosts" Relationship="Self.FK_LotHost_Lot" FromRole="Lot" ToRole="LotHost" />
+  </EntityType>
+  <EntityType Name="LotHost">
+    <Key>
+      <PropertyRef Name="LoHID" />
+    </Key>
+    <Property Name="LoHID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HostID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="LotID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Available" Type="Boolean" Nullable="false" />
+    <Property Name="isEnable" Type="Boolean" />
+    <NavigationProperty Name="BookingLotDetails" Relationship="Self.FK_BookingLotDetail_LotHost" FromRole="LotHost" ToRole="BookingLotDetail" />
+    <NavigationProperty Name="Host" Relationship="Self.FK_LotHost_Host1" FromRole="LotHost" ToRole="Host" />
+    <NavigationProperty Name="Lot" Relationship="Self.FK_LotHost_Lot" FromRole="LotHost" ToRole="Lot" />
+  </EntityType>
+  <Association Name="FK_BookingLot_Driver">
+    <End Role="Driver" Type="Self.Driver" Multiplicity="1" />
+    <End Role="BookingLot" Type="Self.BookingLot" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Driver">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="BookingLot">
+        <PropertyRef Name="DriverID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingLotDetail_BookingLot">
+    <End Role="BookingLot" Type="Self.BookingLot" Multiplicity="1" />
+    <End Role="BookingLotDetail" Type="Self.BookingLotDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookingLot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BookingLotDetail">
+        <PropertyRef Name="BookingLotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingLotDetail_Host">
+    <End Role="Host" Type="Self.Host" Multiplicity="1" />
+    <End Role="BookingLotDetail" Type="Self.BookingLotDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BookingLotDetail">
+        <PropertyRef Name="HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingLotDetail_LotHost">
+    <End Role="LotHost" Type="Self.LotHost" Multiplicity="1" />
+    <End Role="BookingLotDetail" Type="Self.BookingLotDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LotHost">
+        <PropertyRef Name="LoHID" />
+      </Principal>
+      <Dependent Role="BookingLotDetail">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_County_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="County" Type="Self.County" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="County">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Host_County">
+    <End Role="County" Type="Self.County" Multiplicity="1" />
+    <End Role="Host" Type="Self.Host" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Host">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotHost_Host1">
+    <End Role="Host" Type="Self.Host" Multiplicity="1" />
+    <End Role="LotHost" Type="Self.LotHost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LotHost">
+        <PropertyRef Name="HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotHost_Lot">
+    <End Role="Lot" Type="Self.Lot" Multiplicity="0..1" />
+    <End Role="LotHost" Type="Self.LotHost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LotHost">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ParkingLotOnlineEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Admins" EntityType="Self.Admin" />
+    <EntitySet Name="BookingLots" EntityType="Self.BookingLot" />
+    <EntitySet Name="BookingLotDetails" EntityType="Self.BookingLotDetail" />
+    <EntitySet Name="BookingStatus" EntityType="Self.BookingStatu" />
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Counties" EntityType="Self.County" />
+    <EntitySet Name="Drivers" EntityType="Self.Driver" />
+    <EntitySet Name="Hosts" EntityType="Self.Host" />
+    <EntitySet Name="Lots" EntityType="Self.Lot" />
+    <EntitySet Name="LotHosts" EntityType="Self.LotHost" />
+    <AssociationSet Name="FK_BookingLot_Driver" Association="Self.FK_BookingLot_Driver">
+      <End Role="Driver" EntitySet="Drivers" />
+      <End Role="BookingLot" EntitySet="BookingLots" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingLotDetail_BookingLot" Association="Self.FK_BookingLotDetail_BookingLot">
+      <End Role="BookingLot" EntitySet="BookingLots" />
+      <End Role="BookingLotDetail" EntitySet="BookingLotDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingLotDetail_Host" Association="Self.FK_BookingLotDetail_Host">
+      <End Role="Host" EntitySet="Hosts" />
+      <End Role="BookingLotDetail" EntitySet="BookingLotDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingLotDetail_LotHost" Association="Self.FK_BookingLotDetail_LotHost">
+      <End Role="LotHost" EntitySet="LotHosts" />
+      <End Role="BookingLotDetail" EntitySet="BookingLotDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK_County_City" Association="Self.FK_County_City">
+      <End Role="City" EntitySet="Cities" />
+      <End Role="County" EntitySet="Counties" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Host_County" Association="Self.FK_Host_County">
+      <End Role="County" EntitySet="Counties" />
+      <End Role="Host" EntitySet="Hosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotHost_Host1" Association="Self.FK_LotHost_Host1">
+      <End Role="Host" EntitySet="Hosts" />
+      <End Role="LotHost" EntitySet="LotHosts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotHost_Lot" Association="Self.FK_LotHost_Lot">
+      <End Role="Lot" EntitySet="Lots" />
+      <End Role="LotHost" EntitySet="LotHosts" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

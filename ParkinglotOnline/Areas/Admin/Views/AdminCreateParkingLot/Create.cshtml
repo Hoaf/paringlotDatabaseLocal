@@ -1,0 +1,85 @@
+﻿@model ParkinglotOnline.Areas.Admin.Models.MultipleModel.MultipleAdmin
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+    <link href="~/Areas/Admin/assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template-->
+    <link href="~/Areas/Admin/assets/css/sb-admin.css" rel="stylesheet">
+</head>
+<body class="bg-dark">
+    @if (Session["SUCCESS"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                /**/
+                alert("-Create Parking Lot Success!");
+                /**/
+            };
+        </script>
+    }
+    <div class="container">
+        <div class="card card-register mx-auto mt-5">
+            <div class="card-header">
+                Create New Parking Lot 
+                <a style="margin-left:50%" class="btn btn-primary" href="@Url.Action("Index","Admin",new { area = "Admin" })">Return Home</a>
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <form>
+                        <span style="color:red">@Model.ErrorAcceptMessage</span>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <span style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">HostID</span>
+                                        <span style="color:crimson">@Html.ValidationMessageFor(model => model.LotHostInsert.HostID)</span>
+                                        @Html.TextBoxFor(model => model.LotHostInsert.HostID, new { @class = "form-control", @placeholder = "Host ID", @required = "required", @autofocus = "autofocus" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-label-group">
+                                        <span style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">Lot's host ID</span>
+                                        <span style="color:crimson">@Html.ValidationMessageFor(model => model.LotHostInsert.LoHID)</span>
+                                        @Html.TextBoxFor(model => model.LotHostInsert.LoHID, new { @placeholder = "Lot's host ID", @class = "form-control", @required = "required" })
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-label-group ">
+                                <select class="custom-select" name="SLRange">
+                                    @foreach (var range in Model.Lot)
+                                    {
+                                        <option class="custom-select-lg" value="@range.ID"> @range.Name </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <input type="submit" class="btn btn-primary btn-block" value="Create" />
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Areas/Admin/assets/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Areas/Admin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="~/Areas/Admin/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+</body>
+</html>

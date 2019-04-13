@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ParkingLotOnlineModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhoneNumber" Type="numeric" Precision="18" Scale="0" />
+    <Property Name="Address" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="isEnable" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BookingLot">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DriverID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="EntryDateTime" Type="datetime" Nullable="false" />
+    <Property Name="ExitDateTime" Type="datetime" />
+  </EntityType>
+  <EntityType Name="BookingLotDetail">
+    <Key>
+      <PropertyRef Name="BLDId" />
+    </Key>
+    <Property Name="BLDId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HostID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="LotID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="BookingLotID" Type="int" Nullable="false" />
+    <Property Name="UnitPrice" Type="float" />
+    <Property Name="status" Type="int" />
+  </EntityType>
+  <EntityType Name="BookingStatus">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+  </EntityType>
+  <EntityType Name="County">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="CityID" Type="varchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Driver">
+    <Key>
+      <PropertyRef Name="Username" />
+    </Key>
+    <Property Name="Username" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhoneNumber" Type="int" Nullable="false" />
+    <Property Name="isEnable" Type="bit" />
+  </EntityType>
+  <EntityType Name="Finance">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Income" Type="float" Nullable="false" />
+    <Property Name="HostID" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Host">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Fullname" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="CountyID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="isEnable" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lot">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" />
+    <Property Name="UnitPrice" Type="float" Nullable="false" />
+    <Property Name="Image" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="LotHost">
+    <Key>
+      <PropertyRef Name="LoHID" />
+    </Key>
+    <Property Name="LoHID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="HostID" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="LotID" Type="varchar" MaxLength="10" />
+    <Property Name="Available" Type="bit" Nullable="false" />
+    <Property Name="isEnable" Type="bit" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ParkingLotOnline.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="database_firewall_rules">
+    <Key>
+      <PropertyRef Name="id" />
+      <PropertyRef Name="name" />
+      <PropertyRef Name="start_ip_address" />
+      <PropertyRef Name="end_ip_address" />
+      <PropertyRef Name="create_date" />
+      <PropertyRef Name="modify_date" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="create_date" Type="datetime" Nullable="false" />
+    <Property Name="modify_date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_BookingLot_Driver">
+    <End Role="Driver" Type="Self.Driver" Multiplicity="1" />
+    <End Role="BookingLot" Type="Self.BookingLot" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Driver">
+        <PropertyRef Name="Username" />
+      </Principal>
+      <Dependent Role="BookingLot">
+        <PropertyRef Name="DriverID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingLotDetail_BookingLot">
+    <End Role="BookingLot" Type="Self.BookingLot" Multiplicity="1" />
+    <End Role="BookingLotDetail" Type="Self.BookingLotDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BookingLot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BookingLotDetail">
+        <PropertyRef Name="BookingLotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingLotDetail_Host">
+    <End Role="Host" Type="Self.Host" Multiplicity="1" />
+    <End Role="BookingLotDetail" Type="Self.BookingLotDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="BookingLotDetail">
+        <PropertyRef Name="HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingLotDetail_LotHost">
+    <End Role="LotHost" Type="Self.LotHost" Multiplicity="1" />
+    <End Role="BookingLotDetail" Type="Self.BookingLotDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LotHost">
+        <PropertyRef Name="LoHID" />
+      </Principal>
+      <Dependent Role="BookingLotDetail">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_County_City">
+    <End Role="City" Type="Self.City" Multiplicity="1" />
+    <End Role="County" Type="Self.County" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="City">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="County">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Finance_Host">
+    <End Role="Host" Type="Self.Host" Multiplicity="1" />
+    <End Role="Finance" Type="Self.Finance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Finance">
+        <PropertyRef Name="HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Host_County">
+    <End Role="County" Type="Self.County" Multiplicity="1" />
+    <End Role="Host" Type="Self.Host" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="County">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Host">
+        <PropertyRef Name="CountyID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotHost_Host1">
+    <End Role="Host" Type="Self.Host" Multiplicity="1" />
+    <End Role="LotHost" Type="Self.LotHost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Host">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LotHost">
+        <PropertyRef Name="HostID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LotHost_Lot">
+    <End Role="Lot" Type="Self.Lot" Multiplicity="0..1" />
+    <End Role="LotHost" Type="Self.LotHost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lot">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LotHost">
+        <PropertyRef Name="LotID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="Sp_Admin_Host_AcceptRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoHID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Admin_Host_CancelRequest" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoHID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Admin_Host_CountNotific" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Sp_Admin_Host_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Admin_Host_Request" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Sp_Admin_ListHost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Sp_Admin_ListLotHot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Admin_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Admin_LotHot_UpdateLoHID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LotID" Type="varchar" Mode="In" />
+    <Parameter Name="LoHID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_BookingDetail_Cancel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="BookingID" Type="int" Mode="In" />
+    <Parameter Name="LoHID" Type="varchar" Mode="In" />
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_BookingLot_ByYearAndMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_BookingLot_Current" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_BookingLot_InfoEachLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+    <Parameter Name="BookingID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_BookingLot_SumPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+    <Parameter Name="BookingID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Sp_Count_Parkinglot_unavailable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Driver_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_DriverBooked_History" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="driverID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Host_ListLot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Host_Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ID" Type="varchar" Mode="In" />
+    <Parameter Name="Password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Income_ByYearAndMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Month" Type="int" Mode="In" />
+    <Parameter Name="Year" Type="int" Mode="In" />
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Infomation_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoHID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_Lot_All" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="Sp_Lot_ByLoHID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoHID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_LotHost_Available" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoHID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_LotHost_Insert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="LoHID" Type="varchar" Mode="In" />
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+    <Parameter Name="LotID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_LotHost_Lot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_LotHost_Lot_Driver" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="hostId" Type="varchar" Mode="In" />
+    <Parameter Name="lotId" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_LotHost_Lot_Driver_All" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="Sp_LotHot_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="HostID" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="ParkingLotOnlineModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BookingLot" EntityType="Self.BookingLot" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BookingLotDetail" EntityType="Self.BookingLotDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BookingStatus" EntityType="Self.BookingStatus" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="County" EntityType="Self.County" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Driver" EntityType="Self.Driver" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Finance" EntityType="Self.Finance" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Host" EntityType="Self.Host" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lot" EntityType="Self.Lot" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LotHost" EntityType="Self.LotHost" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
+      <DefiningQuery>SELECT 
+    [database_firewall_rules].[id] AS [id], 
+    [database_firewall_rules].[name] AS [name], 
+    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
+    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
+    [database_firewall_rules].[create_date] AS [create_date], 
+    [database_firewall_rules].[modify_date] AS [modify_date]
+    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_BookingLot_Driver" Association="Self.FK_BookingLot_Driver">
+      <End Role="Driver" EntitySet="Driver" />
+      <End Role="BookingLot" EntitySet="BookingLot" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingLotDetail_BookingLot" Association="Self.FK_BookingLotDetail_BookingLot">
+      <End Role="BookingLot" EntitySet="BookingLot" />
+      <End Role="BookingLotDetail" EntitySet="BookingLotDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingLotDetail_Host" Association="Self.FK_BookingLotDetail_Host">
+      <End Role="Host" EntitySet="Host" />
+      <End Role="BookingLotDetail" EntitySet="BookingLotDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingLotDetail_LotHost" Association="Self.FK_BookingLotDetail_LotHost">
+      <End Role="LotHost" EntitySet="LotHost" />
+      <End Role="BookingLotDetail" EntitySet="BookingLotDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_County_City" Association="Self.FK_County_City">
+      <End Role="City" EntitySet="City" />
+      <End Role="County" EntitySet="County" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Finance_Host" Association="Self.FK_Finance_Host">
+      <End Role="Host" EntitySet="Host" />
+      <End Role="Finance" EntitySet="Finance" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Host_County" Association="Self.FK_Host_County">
+      <End Role="County" EntitySet="County" />
+      <End Role="Host" EntitySet="Host" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotHost_Host1" Association="Self.FK_LotHost_Host1">
+      <End Role="Host" EntitySet="Host" />
+      <End Role="LotHost" EntitySet="LotHost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LotHost_Lot" Association="Self.FK_LotHost_Lot">
+      <End Role="Lot" EntitySet="Lot" />
+      <End Role="LotHost" EntitySet="LotHost" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

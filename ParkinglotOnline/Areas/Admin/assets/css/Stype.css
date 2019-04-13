@@ -1,0 +1,41 @@
+﻿.page-pagi {
+    margin-top: 50px;
+}
+
+    .page-pagi .pagination {
+        display: -ms-flexbox;
+        display: flex;
+        padding-left: 0px;
+        list-style: none;
+        border-radius: .25rem;
+    }
+
+        .page-pagi .pagination li a {
+            border-color: #ffd000;
+            display: block;
+            padding: .5rem.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #007bff;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+
+    .page-pagi nav li a {
+        border-color: #ffd000;
+        color: #000;
+        font-weight: 600;
+        -webkit-transition: all 0.4s ease 0s;
+        transition: all 0.4s ease 0s;
+    }
+
+    .page-pagi nav ul li.active a {
+        background-color: #ffd000 !important;
+        border-color: #ffd000 !important;
+    }
+
+    .page-pagi nav li a:hover {
+        background-color: #ffd000;
+        border-color: #ffd000;
+        color: #fff;
+    }

@@ -1,0 +1,312 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ParkingLotOnlineModelStoreContainer" CdmEntityContainer="ParkingLotOnlineEntities">
+    <EntitySetMapping Name="Admins">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.Admin">
+        <MappingFragment StoreEntitySet="Admin">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BookingLots">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.BookingLot">
+        <MappingFragment StoreEntitySet="BookingLot">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+          <ScalarProperty Name="EntryDateTime" ColumnName="EntryDateTime" />
+          <ScalarProperty Name="ExitDateTime" ColumnName="ExitDateTime" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BookingLotDetails">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.BookingLotDetail">
+        <MappingFragment StoreEntitySet="BookingLotDetail">
+          <ScalarProperty Name="BLDId" ColumnName="BLDId" />
+          <ScalarProperty Name="HostID" ColumnName="HostID" />
+          <ScalarProperty Name="LotID" ColumnName="LotID" />
+          <ScalarProperty Name="BookingLotID" ColumnName="BookingLotID" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BookingStatus">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.BookingStatu">
+        <MappingFragment StoreEntitySet="BookingStatus">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Counties">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.County">
+        <MappingFragment StoreEntitySet="County">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Drivers">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.Driver">
+        <MappingFragment StoreEntitySet="Driver">
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Finances">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.Finance">
+        <MappingFragment StoreEntitySet="Finance">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Income" ColumnName="Income" />
+          <ScalarProperty Name="HostID" ColumnName="HostID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hosts">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.Host">
+        <MappingFragment StoreEntitySet="Host">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CountyID" ColumnName="CountyID" />
+          <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lots">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.Lot">
+        <MappingFragment StoreEntitySet="Lot">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LotHosts">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.LotHost">
+        <MappingFragment StoreEntitySet="LotHost">
+          <ScalarProperty Name="LoHID" ColumnName="LoHID" />
+          <ScalarProperty Name="HostID" ColumnName="HostID" />
+          <ScalarProperty Name="LotID" ColumnName="LotID" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="isEnable" ColumnName="isEnable" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="database_firewall_rules">
+      <EntityTypeMapping TypeName="ParkingLotOnlineModel.database_firewall_rules">
+        <MappingFragment StoreEntitySet="database_firewall_rules">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
+          <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
+          <ScalarProperty Name="create_date" ColumnName="create_date" />
+          <ScalarProperty Name="modify_date" ColumnName="modify_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Admin_Host_AcceptRequest" FunctionName="ParkingLotOnlineModel.Store.Sp_Admin_Host_AcceptRequest" />
+    <FunctionImportMapping FunctionImportName="Sp_Admin_Host_CancelRequest" FunctionName="ParkingLotOnlineModel.Store.Sp_Admin_Host_CancelRequest" />
+    <FunctionImportMapping FunctionImportName="Sp_Admin_Host_CountNotific" FunctionName="ParkingLotOnlineModel.Store.Sp_Admin_Host_CountNotific" />
+    <FunctionImportMapping FunctionImportName="Sp_Admin_Host_Detail" FunctionName="ParkingLotOnlineModel.Store.Sp_Admin_Host_Detail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_Admin_Host_Detail_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Admin_Host_Request" FunctionName="ParkingLotOnlineModel.Store.Sp_Admin_Host_Request">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_Admin_Host_Request_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="LoHID" ColumnName="LoHID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Admin_ListHost" FunctionName="ParkingLotOnlineModel.Store.Sp_Admin_ListHost">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_Admin_ListHost_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="CountyName" ColumnName="CountyName" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Admin_ListLotHot" FunctionName="ParkingLotOnlineModel.Store.Sp_Admin_ListLotHot">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_Admin_ListLotHot_Result">
+          <ScalarProperty Name="LoHID" ColumnName="LoHID" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Admin_Login" FunctionName="ParkingLotOnlineModel.Store.Sp_Admin_Login" />
+    <FunctionImportMapping FunctionImportName="Sp_Admin_LotHot_UpdateLoHID" FunctionName="ParkingLotOnlineModel.Store.Sp_Admin_LotHot_UpdateLoHID" />
+    <FunctionImportMapping FunctionImportName="Sp_BookingDetail_Cancel" FunctionName="ParkingLotOnlineModel.Store.Sp_BookingDetail_Cancel" />
+    <FunctionImportMapping FunctionImportName="Sp_BookingLot_ByYearAndMonth" FunctionName="ParkingLotOnlineModel.Store.Sp_BookingLot_ByYearAndMonth">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_BookingLot_ByYearAndMonth_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+          <ScalarProperty Name="EntryDateTime" ColumnName="EntryDateTime" />
+          <ScalarProperty Name="ExitDateTime" ColumnName="ExitDateTime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_BookingLot_Current" FunctionName="ParkingLotOnlineModel.Store.Sp_BookingLot_Current">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_BookingLot_Current_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="DriverID" ColumnName="DriverID" />
+          <ScalarProperty Name="EntryDateTime" ColumnName="EntryDateTime" />
+          <ScalarProperty Name="ExitDateTime" ColumnName="ExitDateTime" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_BookingLot_InfoEachLot" FunctionName="ParkingLotOnlineModel.Store.Sp_BookingLot_InfoEachLot">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_BookingLot_InfoEachLot_Result">
+          <ScalarProperty Name="LotID" ColumnName="LotID" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_BookingLot_SumPrice" FunctionName="ParkingLotOnlineModel.Store.Sp_BookingLot_SumPrice" />
+    <FunctionImportMapping FunctionImportName="Sp_Count_Parkinglot_unavailable" FunctionName="ParkingLotOnlineModel.Store.Sp_Count_Parkinglot_unavailable" />
+    <FunctionImportMapping FunctionImportName="Sp_Driver_Login" FunctionName="ParkingLotOnlineModel.Store.Sp_Driver_Login" />
+    <FunctionImportMapping FunctionImportName="Sp_DriverBooked_History" FunctionName="ParkingLotOnlineModel.Store.Sp_DriverBooked_History">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_DriverBooked_History_Result">
+          <ScalarProperty Name="BLDId" ColumnName="BLDId" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="EntryDateTime" ColumnName="EntryDateTime" />
+          <ScalarProperty Name="ExitDateTime" ColumnName="ExitDateTime" />
+          <ScalarProperty Name="HostID" ColumnName="HostID" />
+          <ScalarProperty Name="statusName" ColumnName="statusName" />
+          <ScalarProperty Name="LoHID" ColumnName="LoHID" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="LotImage" ColumnName="LotImage" />
+          <ScalarProperty Name="BLid" ColumnName="BLid" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Host_ListLot" FunctionName="ParkingLotOnlineModel.Store.Sp_Host_ListLot">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_Host_ListLot_Result">
+          <ScalarProperty Name="LoHID" ColumnName="LoHID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Host_Login" FunctionName="ParkingLotOnlineModel.Store.Sp_Host_Login" />
+    <FunctionImportMapping FunctionImportName="Sp_Income_ByYearAndMonth" FunctionName="ParkingLotOnlineModel.Store.Sp_Income_ByYearAndMonth" />
+    <FunctionImportMapping FunctionImportName="Sp_Infomation_Detail" FunctionName="ParkingLotOnlineModel.Store.Sp_Infomation_Detail">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_Infomation_Detail_Result">
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="EntryDateTime" ColumnName="EntryDateTime" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Lot_All" FunctionName="ParkingLotOnlineModel.Store.Sp_Lot_All">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_Lot_All_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_Lot_ByLoHID" FunctionName="ParkingLotOnlineModel.Store.Sp_Lot_ByLoHID">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_Lot_ByLoHID_Result">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_LotHost_Available" FunctionName="ParkingLotOnlineModel.Store.Sp_LotHost_Available" />
+    <FunctionImportMapping FunctionImportName="Sp_LotHost_Insert" FunctionName="ParkingLotOnlineModel.Store.Sp_LotHost_Insert" />
+    <FunctionImportMapping FunctionImportName="Sp_LotHost_Lot" FunctionName="ParkingLotOnlineModel.Store.Sp_LotHost_Lot">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_LotHost_Lot_Result">
+          <ScalarProperty Name="LoHID" ColumnName="LoHID" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_LotHost_Lot_Driver" FunctionName="ParkingLotOnlineModel.Store.Sp_LotHost_Lot_Driver">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_LotHost_Lot_Driver_Result">
+          <ScalarProperty Name="LoHID" ColumnName="LoHID" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_LotHost_Lot_Driver_All" FunctionName="ParkingLotOnlineModel.Store.Sp_LotHost_Lot_Driver_All">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ParkingLotOnlineModel.Sp_LotHost_Lot_Driver_All_Result">
+          <ScalarProperty Name="LoHID" ColumnName="LoHID" />
+          <ScalarProperty Name="Available" ColumnName="Available" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Sp_LotHot_Count" FunctionName="ParkingLotOnlineModel.Store.Sp_LotHot_Count" />
+  </EntityContainerMapping>
+</Mapping>
